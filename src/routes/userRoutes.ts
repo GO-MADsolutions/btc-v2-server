@@ -56,6 +56,12 @@ exports.register = function(server: Hapi.Server, options, cont){
             method:"POST",
             path:"/login",
             handler:userctrl.login
+        },
+        {
+            method:"GET",
+            path:"/demo",
+            handler:userctrl.demo
+
         }
     ]);
     cont();
