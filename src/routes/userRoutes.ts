@@ -59,7 +59,7 @@ exports.register = function(server: Hapi.Server, options, cont){
         },
         {
             method:"GET",
-            path:"/demo",
+            path:"/",
             handler:userctrl.demo
 
         }
