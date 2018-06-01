@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && npm run build:live && node app",
+    "start": "gulp",
     "build": "gulp build",
     "test": "gulp test",
     "prebuild": "npm install",
