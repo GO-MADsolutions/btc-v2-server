@@ -7,7 +7,7 @@ let gulp = require('gulp');
 let ts = require("gulp-typescript")
 let nodemon = require("gulp-nodemon");
 var     tsProject = ts.createProject('./tsconfig.json');
-gulp.task("default", ["serve"]);
+gulp.task("default", ["compile"]);
 
 gulp.task("watch", () => {
     gulp.watch('src/**/*.ts', ["compile"]);
