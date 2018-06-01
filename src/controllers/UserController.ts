@@ -9,6 +9,9 @@ const jwt = require('jsonwebtoken');
 /*const bcrypt = require('bcrypt');*/
 export class UserController{
     constructor(){}
+    public demo(request: Hapi.Request, reply){
+        reply('DEMO WORK').code(201);
+    }
     public  insertUser(request: Hapi.Request, reply){
         let self = this;
         bcrypt.genSalt(10,(err, salt)=>{
