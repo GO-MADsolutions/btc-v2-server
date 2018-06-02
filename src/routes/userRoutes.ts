@@ -36,7 +36,7 @@ exports.register = function(server: Hapi.Server, options, cont){
             config:{
                 auth: {
                     strategy: 'BTCAuth',
-                    scope: ['admin', 'student']
+                    scope: ['student','admin']
                 }
             },
             handler:userctrl.updateUser
