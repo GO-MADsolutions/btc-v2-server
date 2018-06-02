@@ -70,7 +70,8 @@ export class LessonController {
                 reply(err)
             }
             else {
-                if(success[0].lessons) {
+                console.log(' lessons success', success);
+                if(success[0] !== undefined || success[0] !== null) {
                     reply(success[0].lessons);
                 } else {
                     reply('Server error in fetching lesson');
