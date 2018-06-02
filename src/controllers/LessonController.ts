@@ -65,13 +65,13 @@ export class LessonController {
             'subject': request.params.subject
         }
         lesson.find(filter, function (err, success) {
-            if(err){
+            if(err) {
                 console.log('ERROR IN FETCHING LESSONS');
                 reply(err)
             }
             else {
-                console.log(' lessons success', success);
-                if(success[0] !== undefined || success[0] !== null) {
+                console.log(' lessons success', success[0]);
+                if (success[0] !== undefined) {
                     reply(success[0].lessons);
                 } else {
                     reply('Server error in fetching lesson');
