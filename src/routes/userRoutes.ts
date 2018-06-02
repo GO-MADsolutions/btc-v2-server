@@ -36,7 +36,7 @@ exports.register = function(server: Hapi.Server, options, cont){
             config:{
                 auth: {
                     strategy: 'BTCAuth',
-                    scope: ['admin']
+                    scope: ['admin', 'student']
                 }
             },
             handler:userctrl.updateUser
@@ -62,7 +62,18 @@ exports.register = function(server: Hapi.Server, options, cont){
             path:"/",
             handler:userctrl.demo
 
-        }
+        },
+        {
+            method:"GET",
+            path:"/users",
+            config:{
+                auth: {
+                    strategy: 'BTCAuth',
+                    scope: ['admin']
+                }
+            },
+            handler:userctrl.getAllUsers
+        },
     ]);
     cont();
 }
