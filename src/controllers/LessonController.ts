@@ -70,7 +70,11 @@ export class LessonController {
                 reply(err)
             }
             else {
-                reply(success[0].lessons);
+                if(success[0].lessons) {
+                    reply(success[0].lessons);
+                } else {
+                    reply('Server error in fetching lesson');
+                }
             }
         })
     }
