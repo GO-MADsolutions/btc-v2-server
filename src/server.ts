@@ -19,7 +19,8 @@ const manifest = {
         }
     },
     connections:[{
-        port:process.env.PORT
+        /*port:process.env.PORT*/
+        port:8088
     }],
     registrations:[
          {
