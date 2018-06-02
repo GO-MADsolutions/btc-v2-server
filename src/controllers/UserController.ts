@@ -153,7 +153,6 @@ export class UserController{
                         reply(err);
                     }
                     if (isValid) {
-                       /* reply(success);*/
                         console.log('SUCCESSFUL PASSWORD COMPARED');
                         let self = new UserController();
                         reply({ id_token: self.createTokenLogin(success) }).code(201);
