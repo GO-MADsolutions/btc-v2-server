@@ -5,7 +5,7 @@ import * as Hapi from 'hapi';
 import {func} from "joi";
 export class MarksController {
     constructor(){}
-    insertMarks(request: Hapi.Request, reply){
+    public insertMarks(request: Hapi.Request, reply){
         const mark  = request.server.plugins['hapi-mongo-models'].Mark;
         let data =  {
             'standard': request.params.standard,
@@ -15,6 +15,7 @@ export class MarksController {
 
         mark.insertOne(data, function(err, success){
             if(err){
+                console.log('ERROR IN INSERTING MARKS',data)
                 reply(err)
             }
             else{
@@ -36,10 +37,14 @@ export class MarksController {
         }
         marks.findOneAndUpdate(filter,update, function (err ,success) {
             if(err){
+                console.log('ERROR iN FINDING MARK',err)
                 reply(err);
             }
-            else{
-                reply(success);
+            else {
+                if (success === undefined ) {
+                    new MarksController().insertMarks(request, reply);
+                }
+                /*reply(success);*/
             }
         })
     }

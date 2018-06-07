@@ -5,10 +5,12 @@
 import * as Hapi from 'hapi';
 import * as bcrypt from 'bcrypt';
 import * as Boom from "boom";
+import * as Nexmo from "nexmo";
 const jwt = require('jsonwebtoken');
 /*const bcrypt = require('bcrypt');*/
 export class UserController{
-    constructor(){}
+    constructor(){
+    }
     public demo(request: Hapi.Request, reply){
         reply('DEMO WORK').code(201);
     }
@@ -32,6 +34,20 @@ export class UserController{
                        else {
                            console.log('CREATE USER SUCCESS GETTING TOKEN' ,success)
                            let self = new UserController();
+                           const nexmo = new Nexmo({
+                               apiKey: 'c9f94323',
+                               apiSecret: 'BIQwD8bRCp94R61m'
+                           });
+                           nexmo.message.sendSms(
+                               '918939600806', '918939600806', 'Hi Welcome to Balaji Tuition Center',
+                               (err, responseData) => {
+                                   if (err) {
+                                       console.log('ERROR FROM NEXMO', err);
+                                   } else {
+                                       console.log(responseData);
+                                   }
+                               }
+                           );
                            reply({ id_token: self.createToken(success) }).code(201);
                        }
                    });
