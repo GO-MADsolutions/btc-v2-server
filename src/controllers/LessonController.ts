@@ -39,7 +39,10 @@ export class LessonController {
                 reply(err);
             }
             else{
-                reply(success);
+                if (success === undefined) {
+                    new LessonController().insertLesson(request, reply);
+                }
+               /* reply(success);*/
             }
         })
     }
