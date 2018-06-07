@@ -5,7 +5,7 @@
 import * as Hapi from 'hapi';
 import * as bcrypt from 'bcrypt';
 import * as Boom from "boom";
-import * as Nexmo from "nexmo";
+//import * as Nexmo from "nexmo";
 const jwt = require('jsonwebtoken');
 /*const bcrypt = require('bcrypt');*/
 export class UserController{
@@ -34,7 +34,7 @@ export class UserController{
                        else {
                            console.log('CREATE USER SUCCESS GETTING TOKEN' ,success)
                            let self = new UserController();
-                           const nexmo = new Nexmo({
+                           /*const nexmo = new Nexmo({
                                apiKey: 'c9f94323',
                                apiSecret: 'BIQwD8bRCp94R61m'
                            });
@@ -47,7 +47,7 @@ export class UserController{
                                        console.log(responseData);
                                    }
                                }
-                           );
+                           );*/
                            reply({ id_token: self.createToken(success) }).code(201);
                        }
                    });
