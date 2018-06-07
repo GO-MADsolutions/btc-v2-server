@@ -42,7 +42,7 @@ export class MarksController {
             }
             else {
                 if (success === undefined ) {
-                    console.log('CREATING MARKS')
+                    console.log('CREATING MARKS !!!')
                     new MarksController().insertMarks(request, reply);
                 }
                 /*reply(success);*/
