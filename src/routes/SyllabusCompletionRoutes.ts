@@ -23,7 +23,7 @@ exports.register = function(server: Hapi.Server, options, cont){
             config:{
                 auth: {
                     strategy: 'BTCAuth',
-                    scope: ['admin']
+                    scope: ['admin','student']
                 }
             },
             handler:syllabusCompletionctrl.getSyllabusCompletion
