@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node build/server.js",
-    "build": "gulp compile",
+    "build": "gulp build",
     "prebuild": "npm install",
     "build:dev": "nodemon start build/src/server.js --watch",
     "build:live": "nodemon build/src/server.js",
