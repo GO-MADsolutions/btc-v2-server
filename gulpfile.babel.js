@@ -10,7 +10,7 @@ var     tsProject = ts.createProject('./tsconfig.json');
 var filesToMove = [
     '**/*.html'
 ];
-gulp.task("default", ["serve"]);
+gulp.task("default", ["compile","move"]);
 gulp.task('move', function(){
     // the base option sets the relative root for the set of files,
     // preserving the folder structure
