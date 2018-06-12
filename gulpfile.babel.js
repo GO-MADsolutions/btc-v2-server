@@ -10,10 +10,8 @@ var     tsProject = ts.createProject('./tsconfig.json');
 var filesToMove = [
     '**/*.html'
 ];
-gulp.task("default", ["compile","move"]);
+gulp.task("default", ["compile"]);
 gulp.task('move', function(){
-    // the base option sets the relative root for the set of files,
-    // preserving the folder structure
     gulp.src(filesToMove, { base: 'template' })
         .pipe(gulp.dest('build/template'));
 });
@@ -21,7 +19,7 @@ gulp.task("watch", () => {
     gulp.watch('src/**/*.ts', ["compile"]);
 });
 
-gulp.task('compile', function () {
+gulp.task('compile', ["move"], function () {
     let tsResult= gulp.src("src/**/*.ts") // or tsProject.src()
         .pipe(tsProject())
     return tsResult.js.pipe(gulp.dest('build'));
