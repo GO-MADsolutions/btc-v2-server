@@ -22,10 +22,7 @@ export class Mailer {
             const templatePath = Path.resolve(this.Templates, `${filename}.html`);
             const content = await  this.ReadFile(templatePath, 'utf8');
             const template = Handlebars.compile(content);
-            console.log('template', template);
-            console.log('options', options);
             const html = template(options);
-            console.log('options html', html);
             const text = htmlToText.fromString(html);
 
             return {
@@ -40,7 +37,6 @@ export class Mailer {
     public async sendQueryMail(request: Hapi.Request) {
         try {
            const payload = request.payload;
-           console.log('payload',payload);
             const {html, text} = await this.prepareTemplate('query',  { payload });
             let transporter = Nodemailer.createTransport({
                 service: 'Gmail',
@@ -52,21 +48,85 @@ export class Mailer {
             var mail = {
                 from: 'balajituitioncenter17@gmail.com',
                 to: payload.email,
-                subject: 'Test',
+                subject: 'Welcome to Balaji Tuition Center',
                 html,
                 text
-                /*template: 'email',
-                context: {
-                    name: 'HELLO WORLD'
-                }*/
             }
             await transporter.sendMail(mail);
-           /* transporter.sendMail(mail, function (err, info) {
-                if (err) return console.log('error', JSON.stringify(err), {tags: 'email'});
-                if (info) return console.log('info', JSON.stringify(info), {tags: 'email'});
-            });*/
         }
-        catch(err) {
+        catch (err) {
+            console.log('SEND QUERy MAIL ERROR')
+        }
+    }
+    public async notificationMail(request: Hapi.Request) {
+        try {
+            const payload = request.payload;
+            const {html, text} = await this.prepareTemplate('notification',  { payload });
+            let transporter = Nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'balajituitioncenter17@gmail.com',
+                    pass: 'Knowledgewe$erve'
+                }
+            });
+            var mail = {
+                from: 'balajituitioncenter17@gmail.com',
+                to: 'balajituitioncenter17@gmail.com',
+                subject: 'Action Needed',
+                html,
+                text
+            }
+            await transporter.sendMail(mail);
+        }
+        catch (err) {
+            console.log('SEND QUERy MAIL ERROR')
+        }
+    }
+    public async userCreationMail(request: Hapi.Request) {
+        try {
+            const payload = request.payload;
+            const {html, text} = await this.prepareTemplate('newuser',  { payload });
+            let transporter = Nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'balajituitioncenter17@gmail.com',
+                    pass: 'Knowledgewe$erve'
+                }
+            });
+            var mail = {
+                from: 'balajituitioncenter17@gmail.com',
+                to: payload.email,
+                subject: 'Welcome To Balaji Tuition Center',
+                html,
+                text
+            }
+            await transporter.sendMail(mail);
+        }
+        catch (err) {
+            console.log('SEND QUERy MAIL ERROR')
+        }
+    }
+    public async passwordUpdateMail(request: Hapi.Request) {
+        try {
+            const payload = request.payload;
+            const {html, text} = await this.prepareTemplate('notification',  { payload });
+            let transporter = Nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'balajituitioncenter17@gmail.com',
+                    pass: 'Knowledgewe$erve'
+                }
+            });
+            var mail = {
+                from: 'balajituitioncenter17@gmail.com',
+                to: 'balajituitioncenter17@gmail.com',
+                subject: 'Action Needed',
+                html,
+                text
+            }
+            await transporter.sendMail(mail);
+        }
+        catch (err) {
             console.log('SEND QUERy MAIL ERROR')
         }
     }
