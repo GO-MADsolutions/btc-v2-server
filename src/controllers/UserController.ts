@@ -15,19 +15,16 @@ export class UserController {
     constructor() {
     }
     public demo(request: Hapi.Request, reply) {
-                var mailer = new Mailer();
-                mailer.sendQueryMail(request);
                 reply('DEMO WORK').code(201);
     }
     public query(request: Hapi.Request, reply) {
         var mailer = new Mailer();
         mailer.sendQueryMail(request);
+        mailer.notificationMail(request);
         reply('QUERY SUBMITTED').code(201);
     }
     public  insertUser(request: Hapi.Request, reply){
         let self = this;
-        console.log('CRETATE USER PAYLOAD', request.payload);
-        console.log('PAYLOAD USER', request.payload.userName);
         bcrypt.genSalt(10,(err, salt)=>{
             bcrypt.hash(request.payload.password, salt, (err, hash) => {
                if(err){
@@ -42,8 +39,9 @@ export class UserController {
                            reply(err)
                        }
                        else {
-                           console.log('CREATE USER SUCCESS GETTING TOKEN' ,success)
                            let self = new UserController();
+                           var mailer = new Mailer();
+                           mailer.userCreationMail(request);
                            reply({ id_token: self.createToken(success) }).code(201);
                        }
                    });
@@ -139,9 +137,6 @@ export class UserController {
 
     public login(request: Hapi.Request, reply){
         const User = request.server.plugins['hapi-mongo-models'].User;
-        console.log('REQUEST PAYLOAD ', request.payload);
-        console.log('PASSWORD ',  request.payload.userName);
-        console.log('REQUEST PAYLOAD NAME ',  request.payload.userName);
         const filter = {
             "userName":request.payload.userName
         }
@@ -156,21 +151,17 @@ export class UserController {
             }
             else{
                /* reply(success).code(200)*/
-                    console.log('CHECKING PASSWORD USING BCRYPT');
+
                 bcrypt.compare(request.payload.password, success.password, (err, isValid) => {
-                    console.log("request.payload.password",request.payload.password);
-                    console.log("success.password",success.password);
                     if(err){
                         console.log('GOT ERROR IN BCRYPT',err);
                         reply(err);
                     }
                     if (isValid) {
-                        console.log('SUCCESSFUL PASSWORD COMPARED');
                         let self = new UserController();
                         reply({ id_token: self.createTokenLogin(success) }).code(201);
                     }
                     else {
-                        console.log('PASSWORD COMPARISON FAILED');
                         reply(Boom.badRequest('Incorrect password! Please Check'));
                     }
                 });
@@ -181,7 +172,6 @@ export class UserController {
 
 
     public createToken = (user) => {
-        console.log('TOKEN GENERATOR',user[0])
         let scopes;
         let firstLogin;
         if(user[0].firstLogin === 'Y'){
