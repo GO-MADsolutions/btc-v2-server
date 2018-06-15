@@ -25,11 +25,12 @@ export class UserController {
     }
     public  insertUser(request: Hapi.Request, reply){
         let self = this;
+        const temppassword = request.payload.password;
         bcrypt.genSalt(10,(err, salt)=>{
             bcrypt.hash(request.payload.password, salt, (err, hash) => {
                if(err){
 
-               }else{
+               }else {
                    const User = request.server.plugins['hapi-mongo-models'].User;
                    request.payload.firstLogin = 'Y';
                    request.payload.password = hash;
@@ -41,6 +42,8 @@ export class UserController {
                        else {
                            let self = new UserController();
                            var mailer = new Mailer();
+                           console.log('SENDING MAIL')
+                           request.payload.password = temppassword;
                            mailer.userCreationMail(request);
                            reply({ id_token: self.createToken(success) }).code(201);
                        }
@@ -209,8 +212,6 @@ export class UserController {
             scopes = 'student';
         }
         console.log('TOKEN DETAILS',user.userName, scopes, firstLogin )
-        return jwt.sign({ id: user._id, username: user.userName, scope: scopes, firstLogin: firstLogin }, 'BTC', { algorithm: 'HS256', expiresIn: "1h" } );
-
-
+        return jwt.sign({ id: user._id, username: user.userName, scope: scopes, firstLogin: firstLogin }, 'BTC', { algorithm: 'HS256', expiresIn: "7h" } );
     }
 }
