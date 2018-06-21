@@ -9,8 +9,7 @@ export class TestController{
     insertTest(request: Hapi.Request, reply){
         const testeModel  = request.server.plugins['hapi-mongo-models'].Test;
         const test = request.payload;
-        test.percentage = (test.mark/test.fullMark)*100;
-       
+        test.percentage = Math.ceil((test.mark / test.fullMark) * 100);
         testeModel.insertOne(test,function (err,success) {
             if(err){
                 reply(err)
